@@ -1,0 +1,30 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cluster-read-only
+rules:
+- apiGroups: [""]
+  resources: ["pods", "services", "deployments", "configmaps"]
+  verbs: ["get", "list", "watch"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: dev-team-read-access
+subjects:
+- kind: Group
+  name: dev-team
+  apiGroup: rbac.authorization.k8s.io
+- kind: User
+  name: tobe
+  apiGroup: rbac.authorization.k8s.io
+- kind: User
+  name: vera
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: cluster-read-only
+  apiGroup: rbac.authorization.k8s.io
+---
