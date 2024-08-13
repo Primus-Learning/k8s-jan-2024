@@ -1,0 +1,29 @@
+apiVersion: v1
+data:
+  mapRoles: |
+    - groups:
+      - system:bootstrappers
+      - system:nodes
+      rolearn: arn:aws:iam::<AWS-ACCOUNT-ID-HERE>:role/eksctl-map-nodegroup-ng-t2-small-NodeInstanceRole-vIgKJNQPEQMP
+      username: system:node:{{EC2PrivateDNSName}}
+  mapUsers: |
+    - userarn: arn:aws:iam::<AWS-ACCOUNT-ID-HERE>:user/Vera
+      username: vera
+      groups:
+        - dev-team
+    - userarn: arn:aws:iam::<AWS-ACCOUNT-ID-HERE>:user/Tobe
+      username: tobe
+      groups:
+        - dev-team
+  mapRoles: |
+    - groups:
+      - dev-team
+      rolearn: arn:aws:iam::<AWS-ACCOUNT-ID-HERE>:role/dev-team-role
+      username: dev-team
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2024-08-12T21:45:20Z"
+  name: aws-auth
+  namespace: kube-system
+  resourceVersion: "1774"
+  uid: 2148ddb5-2c4c-46fd-8b95-aec792b036b2
